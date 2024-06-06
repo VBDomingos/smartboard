@@ -1,9 +1,6 @@
 # Ignore bin directory
 bin/
 
-# Ignore wwwroot directory
-wwwroot/
-
 # Ignore obj directory
 obj/
 
