@@ -1,4 +1,4 @@
-namespace Dashboard.Models
+namespace SmartBoard.Models
 {
     public class Relatorio
     {

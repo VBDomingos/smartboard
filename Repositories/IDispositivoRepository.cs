@@ -1,6 +1,6 @@
-using Dashboard.Models;
+using SmartBoard.Models;
 
-namespace Dashboard.Repositories
+namespace SmartBoard.Repositories
 {
     public interface IDispositivoRepository
     {

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Models;
+using SmartBoard.Models;
 
-namespace Dashboard.Controllers;
+namespace SmartBoard.Controllers;
 
 public class HomeController : Controller
 {

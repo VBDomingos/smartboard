@@ -1,7 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace Dashboard.Repositories
+namespace SmartBoard.Repositories
 {
     public abstract class DatabaseConnection : IDisposable
     {

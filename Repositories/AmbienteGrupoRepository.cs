@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using Dashboard.Models;
+using SmartBoard.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Dashboard.Repositories
+namespace SmartBoard.Repositories
 {
     public class AmbienteGrupoRepository : DatabaseConnection, IAmbienteGrupoRepository
     {
