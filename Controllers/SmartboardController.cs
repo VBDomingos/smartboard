@@ -4,7 +4,7 @@ using SmartBoard.Models;
 
 namespace SmartBoard.Controllers;
 
-public class HomeController : Controller
+public class LoginController : Controller
 {
     public IActionResult Index()
     {
