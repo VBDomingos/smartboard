@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Dashboard.Models;
 
 namespace Dashboard.Controllers;
 
-public class DashboardController : Controller
+public class HomeController : Controller
 {
-    //get: /Dashboard/
-    public string Index()
+    public IActionResult Index()
     {
-        return "view1";
+        return View();
     }
 
-    //get: /Dashboard/Something
-    public string Something()
+    public IActionResult Privacy()
     {
-        return "view2";
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

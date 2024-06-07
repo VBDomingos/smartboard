@@ -81,6 +81,11 @@ namespace Dashboard.Repositories
             return relatorio;
         }
 
+        public void Update(Relatorio relatorio)
+        {
+            throw new NotImplementedException();
+        }
+
         //update todo
     }
 };
