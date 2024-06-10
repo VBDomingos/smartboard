@@ -1,13 +1,21 @@
+@using SmartBoard.Models
+@model LoginModel
 @{
-    ViewData["Title"] = "Login Page";
+    Layout = "_LayoutDeslogado";
+    ViewData["Title"] = "Login";
 }
-
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
 <div class="bg-white rounded-xl shadow-lg py-7 px-7 flex mt-5 justify-center">
     <div class="justify-center align-middle">
         <div class="justify-center font-3xl font-bold text-center">Faça Seu Login</div>
         <div class="justify-center font-3xl font-light text-center">Digite seu e-mail e senha</div>
         <div class="justify-center font-2xl w-80 align-middle mx-auto">
-            <form>
+            <form asp-controller="Login" asp-action="Entrar" method="post">
                 <div class="form-group mb-3 mt-3">
                     <label for="exampleInputEmail1">Email</label>
                     <div class="relative">
@@ -17,14 +25,16 @@
                                 <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                             </svg>
                         </div>
-                        <input type="text" id="InputEmail" aria-describedby="emailHelp" class="form-control border 
+                        <input type="text" id="InputEmail" asp-for="Login" aria-describedby="emailHelp" class="form-control border 
                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full 
                             ps-10 p-2.5" placeholder="email@dominio.com" />
+                        @Html.ValidationMessageFor(x => x.Login)
                     </div>
                 </div>
                 <div class="form-group mb-3 mt-3">
                     <label for="exampleInputPassword1">Senha</label>
-                    <input type="password" class="form-control w-full" id="InputPassword" placeholder="Sua Senha">
+                    <input type="password" class="form-control w-full" asp-for="Senha" id="InputPassword" placeholder="Sua Senha">
+                    @Html.ValidationMessageFor(x => x.Senha)
                 </div>
                 <button 
                     type="submit" class="text-white bg-gradient-to-r from-[#202020] via-[#171717] to-[#030303] 
