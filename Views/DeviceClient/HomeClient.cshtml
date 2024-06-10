@@ -33,7 +33,13 @@
     <div class="bg-white p-4 rounded-lg max-w-lg mx-auto">
         <h2 class="text-xl font-bold mb-4">LIGA ALGO</h2>
         <p class="mb-4">VAI ME LIGA VAI!!!!</p>
-        <button class="bg-green-500 text-white px-4 py-2 rounded">LIGA ESSA MERDA</button>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded" data-modal-toggle="myModal">Close</button>
+
+        <form asp-controller="Arduino" asp-action="TurnOnLed" method="post">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">LIGA ESSA MERDA</button>
+        </form>
+
+        <form asp-controller="Arduino" asp-action="TurnOffLed" method="post">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Close</button>
+        </form>
     </div>
 </div>

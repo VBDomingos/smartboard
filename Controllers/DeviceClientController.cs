@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SmartBoard.Models;
 
-namespace DeviceClient.Controllers;
+namespace SmartBoard.Controllers;
 
 public class DeviceClientController : Controller
 {
