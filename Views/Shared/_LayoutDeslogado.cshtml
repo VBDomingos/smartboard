@@ -8,57 +8,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmartBoard.styles.css" asp-append-version="true" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer>
-        function toggleMenu() {
-          let menuMobile = document.getElementById('mobile-menu');
-            if (menuMobile.classList.contains('hidden')) {
-                menuMobile.classList.remove('hidden');
-                menuMobile.classList.add('active');
-                //document.querySelector('.icon').src = "assets/img/menu_white_36dp.svg";
-            } else {
-                menuMobile.classList.add('hidden');
-                menuMobile.classList.remove('active');
-                //document.querySelector('.icon').src = "assets/img/close_white_36dp.svg";
-            }
-        }
-
-
-        function handleResize() {
-            let menuMobile = document.getElementById('mobile-menu');
-            if (window.innerWidth >= 768 && menuMobile.classList.contains('hidden')) {
-                menuMobile.classList.add('hidden');
-            } else if (window.innerWidth < 768 && !menuMobile.classList.contains('hidden')) {
-                menuMobile.classList.remove('hidden');
-            } else if (window.innerWidth >= 768 && !menuMobile.classList.contains('hidden') && menuMobile.classList.contains('active')) {
-                menuMobile.classList.add('hidden');
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
-
-        window.addEventListener('DOMContentLoaded', (event) => {
-            handleResize();
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
-            
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const modalId = this.getAttribute('data-modal-toggle');
-                    const modal = document.getElementById(modalId);
-
-                    if (modal.classList.contains('hidden')) {
-                        modal.classList.remove('hidden');
-                        modal.classList.add('flex');
-                    } else {
-                        modal.classList.remove('flex');
-                        modal.classList.add('hidden');
-                    }
-                });
-            });
-        });
-
-    </script>
 </head>
 <body class="h-screen flex justify-center">
     <div class="mx-auto w-screen">

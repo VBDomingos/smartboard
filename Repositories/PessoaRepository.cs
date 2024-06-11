@@ -16,7 +16,7 @@ namespace SmartBoard.Repositories
                 cmd.Parameters.AddWithValue("@Nome", pessoa.Nome);
                 cmd.Parameters.AddWithValue("@Email", pessoa.Email);
                 cmd.Parameters.AddWithValue("@Senha", pessoa.Senha);
-                cmd.Parameters.AddWithValue("@Tipo", pessoa.Tipo);
+                cmd.Parameters.AddWithValue("@Tipo", pessoa.TipoPessoa);
 
                 cmd.ExecuteNonQuery();
             }
@@ -46,7 +46,7 @@ namespace SmartBoard.Repositories
                             Nome = reader.GetString(1),
                             Email = reader.GetString(2),
                             Senha = reader.GetString(3),
-                            Tipo = reader.GetString(4)
+                            TipoPessoa = reader.GetString(4)
                         };
                         pessoas.Add(pessoa);
                     }
@@ -71,7 +71,7 @@ namespace SmartBoard.Repositories
                             Nome = reader.GetString(1),
                             Email = reader.GetString(2),
                             Senha = reader.GetString(3),
-                            Tipo = reader.GetString(4)
+                            TipoPessoa = reader.GetString(4)
                         };
                     }
                 }
@@ -86,7 +86,7 @@ namespace SmartBoard.Repositories
                 cmd.Parameters.AddWithValue("@Nome", pessoa.Nome);
                 cmd.Parameters.AddWithValue("@Email", pessoa.Email);
                 cmd.Parameters.AddWithValue("@Senha", pessoa.Senha);
-                cmd.Parameters.AddWithValue("@Tipo", pessoa.Tipo);
+                cmd.Parameters.AddWithValue("@Tipo", pessoa.TipoPessoa);
                 cmd.Parameters.AddWithValue("@Id", pessoa.IdPessoa);
                 cmd.ExecuteNonQuery();
             }

@@ -6,9 +6,9 @@ using SmartBoard.Filters;
 namespace SmartBoard.Controllers;
 
 [AuthFilter]
-public class DeviceClientController : Controller
+public class DeviceAdminController : Controller
 {
-    public IActionResult HomeClient()
+    public IActionResult HomeAdmin()
     {
         return View();
     }
