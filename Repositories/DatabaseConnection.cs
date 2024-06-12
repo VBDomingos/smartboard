@@ -6,10 +6,13 @@ namespace SmartBoard.Repositories
     public abstract class DatabaseConnection : IDisposable
     {
         protected SqlConnection connection;
+        private readonly IConfiguration _configuration;
+
 
         public DatabaseConnection(IConfiguration configuration)
         {
-            connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+            _configuration = configuration;
+            connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection").ToString());
             connection.Open();
         }
 

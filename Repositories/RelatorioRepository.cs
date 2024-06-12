@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public RelatorioRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Relatorio relatorio)
+        public void Create(RelatorioModel relatorio)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Relatorio (id_cliente, id_tecnico, id_dispositivo, data_instalacao, descricao) VALUES (@IdCliente, @IdTecnico, @IdDispositivo, @DataInstalacao, @Descricao)", connection))
             {
@@ -31,16 +31,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Relatorio> Read()
+        public IEnumerable<RelatorioModel> Read()
         {
-            List<Relatorio> relatorios = new List<Relatorio>();
+            List<RelatorioModel> relatorios = new List<RelatorioModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Relatorio", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Relatorio relatorio = new Relatorio
+                        RelatorioModel relatorio = new RelatorioModel
                         {
                             IdRelatorio = reader.GetInt32(0),
                             IdCliente = reader.GetInt32(1),
@@ -56,9 +56,9 @@ namespace SmartBoard.Repositories
             return relatorios;
         }
 
-        public Relatorio Read(int id)
+        public RelatorioModel Read(int id)
         {
-            Relatorio relatorio = null;
+            RelatorioModel relatorio = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Relatorio WHERE id_relatorio = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -66,7 +66,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        relatorio = new Relatorio
+                        relatorio = new RelatorioModel
                         {
                             IdRelatorio = reader.GetInt32(0),
                             IdCliente = reader.GetInt32(1),
@@ -81,7 +81,7 @@ namespace SmartBoard.Repositories
             return relatorio;
         }
 
-        public void Update(Relatorio relatorio)
+        public void Update(RelatorioModel relatorio)
         {
             throw new NotImplementedException();
         }

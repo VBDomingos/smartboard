@@ -4,8 +4,8 @@ namespace SmartBoard.Repositories
 {
     public interface IAmbienteGrupoRepository
     {
-        void Create(AmbienteGrupo ambienteGrupo);
-        IEnumerable<AmbienteGrupo> Read();
+        void Create(AmbienteGrupoModel ambienteGrupo);
+        IEnumerable<AmbienteGrupoModel> Read();
         void Delete(int idGrupo, int idAmbiente);
     }
 }

@@ -1,8 +1,8 @@
 namespace SmartBoard.Models
 {
-    public class Administrador
+    public class ClienteModel
     {
-        public int IdAdministrador { get; set; }
+        public int IdCliente { get; set; }
         public int IdPessoa { get; set; }
     }
 }

@@ -4,10 +4,10 @@ namespace SmartBoard.Repositories
 {
     public interface ITecnicoRepository
     {
-        void Create(Tecnico tecnico);
-        Tecnico Read(int id);
-        IEnumerable<Tecnico> Read();
-        void Update(Tecnico tecnico);
+        void Create(TecnicoModel tecnico);
+        TecnicoModel Read(int id);
+        IEnumerable<TecnicoModel> Read();
+        void Update(TecnicoModel tecnico);
         void Delete(int id);
     }
 }

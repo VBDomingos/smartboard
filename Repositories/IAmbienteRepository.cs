@@ -4,10 +4,10 @@ namespace SmartBoard.Repositories
 {
     public interface IAmbienteRepository
     {
-        void Create(Ambiente ambiente);
-        Ambiente Read(int id);
-        IEnumerable<Ambiente> Read();
-        void Update(Ambiente ambiente);
+        void Create(AmbienteModel ambiente);
+        AmbienteModel Read(int id);
+        IEnumerable<AmbienteModel> Read();
+        void Update(AmbienteModel ambiente);
         void Delete(int id);
     }
 }

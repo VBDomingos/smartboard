@@ -4,10 +4,10 @@ namespace SmartBoard.Repositories
 {
     public interface IDispositivoRepository
     {
-        void Create(Dispositivo dispositivo);
-        Dispositivo Read(int id);
-        IEnumerable<Dispositivo> Read();
-        void Update(Dispositivo dispositivo);
+        void Create(DispositivoModel dispositivo);
+        DispositivoModel Read(int id);
+        IEnumerable<DispositivoModel> Read();
+        void Update(DispositivoModel dispositivo);
         void Delete(int id);
     }
 }

@@ -10,13 +10,11 @@ namespace SmartBoard.Repositories
     {
         public ClienteRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Cliente cliente)
+        public void Create(ClienteModel cliente)
         {
-            using (SqlCommand cmd = new SqlCommand("INSERT INTO Cliente (id_pessoa, endereco, telefone) VALUES (@IdPessoa, @Endereco, @Telefone)", connection))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Cliente (id_pessoa) VALUES (@IdPessoa)", connection))
             {
                 cmd.Parameters.AddWithValue("@IdPessoa", cliente.IdPessoa);
-                cmd.Parameters.AddWithValue("@Endereco", cliente.Endereco);
-                cmd.Parameters.AddWithValue("@Telefone", cliente.Telefone);
 
                 cmd.ExecuteNonQuery();
             }
@@ -31,21 +29,19 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Cliente> Read()
+        public IEnumerable<ClienteModel> Read()
         {
-            List<Cliente> clientes = new List<Cliente>();
+            List<ClienteModel> clientes = new List<ClienteModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Cliente cliente = new Cliente
+                        ClienteModel cliente = new ClienteModel
                         {
                             IdCliente = reader.GetInt32(0),
-                            IdPessoa = reader.GetInt32(1),
-                            Endereco = reader.GetString(2),
-                            Telefone = reader.GetString(3)
+                            IdPessoa = reader.GetInt32(1)
                         };
                         clientes.Add(cliente);
                     }
@@ -54,9 +50,9 @@ namespace SmartBoard.Repositories
             return clientes;
         }
 
-        public Cliente Read(int id)
+        public ClienteModel Read(int id)
         {
-            Cliente cliente = null;
+            ClienteModel cliente = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Cliente WHERE id_cliente = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -64,12 +60,10 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        cliente = new Cliente
+                        cliente = new ClienteModel
                         {
                             IdCliente = reader.GetInt32(0),
-                            IdPessoa = reader.GetInt32(1),
-                            Endereco = reader.GetString(2),
-                            Telefone = reader.GetString(3)
+                            IdPessoa = reader.GetInt32(1)
                         };
                     }
                 }
@@ -77,13 +71,11 @@ namespace SmartBoard.Repositories
             return cliente;
         }
 
-        public void Update(Cliente cliente)
+        public void Update(ClienteModel cliente)
         {
-            using (SqlCommand cmd = new SqlCommand("UPDATE Cliente SET id_pessoa = @IdPessoa, endereco = @Endereco, telefone = @Telefone WHERE id_cliente = @Id", connection))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Cliente SET id_pessoa = @IdPessoa WHERE id_cliente = @Id", connection))
             {
                 cmd.Parameters.AddWithValue("@IdPessoa", cliente.IdPessoa);
-                cmd.Parameters.AddWithValue("@Endereco", cliente.Endereco);
-                cmd.Parameters.AddWithValue("@Telefone", cliente.Telefone);
                 cmd.Parameters.AddWithValue("@Id", cliente.IdCliente);
                 cmd.ExecuteNonQuery();
             }

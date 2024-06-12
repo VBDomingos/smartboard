@@ -4,10 +4,10 @@ namespace SmartBoard.Repositories
 {
     public interface IAdministradorRepository
     {
-        void Create(Administrador administrador);
-        Administrador Read(int id);
-        IEnumerable<Administrador> Read();
-        void Update(Administrador administrador);
+        void Create(AdministradorModel administrador);
+        AdministradorModel Read(int id);
+        IEnumerable<AdministradorModel> Read();
+        void Update(AdministradorModel administrador);
         void Delete(int id);
     }
 }

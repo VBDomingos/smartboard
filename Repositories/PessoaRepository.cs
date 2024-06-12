@@ -2,14 +2,17 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using SmartBoard.Models;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace SmartBoard.Repositories
 {
     public class PessoaRepository : DatabaseConnection, IPessoaRepository
     {
-        public PessoaRepository(IConfiguration configuration) : base(configuration) { }
+        public PessoaRepository(IConfiguration configuration) : base(configuration)
+        {
+        }
 
-        public void Create(Pessoa pessoa)
+        public void Create(PessoaModel pessoa)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Pessoa (nome, email, senha, tipo) VALUES (@nome, @Email, @Senha, @Tipo)", connection))
             {
@@ -31,16 +34,48 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Pessoa> Read()
+        public PessoaModel Login(string email, string senha)
         {
-            List<Pessoa> pessoas = new List<Pessoa>();
+            PessoaModel pessoa = null;
+
+
+            using (SqlCommand cmd = new SqlCommand("SELECT id_pessoa, nome, email, TipoPessoa, cep, numero, ativo FROM Pessoas WHERE Email = @Login AND senha = @Password", connection))
+            {
+                cmd.Parameters.Add("@Login", SqlDbType.VarChar).Value = email;
+                cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = senha;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        pessoa = new PessoaModel
+                        {
+                            IdPessoa = (int)reader["id_pessoa"],
+                            Email = reader["email"].ToString(),
+                            Nome = reader["Nome"].ToString(),
+                            TipoPessoa = reader["TipoPessoa"].ToString(),
+                            cep = reader["cep"].ToString(),
+                            numero = Convert.ToInt16(reader["numero"]),
+                            ativo = Convert.ToInt16(reader["ativo"])
+                        };
+                    }
+                }
+            }
+
+
+            return pessoa;
+        }
+
+        public IEnumerable<PessoaModel> Read()
+        {
+            List<PessoaModel> pessoas = new List<PessoaModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Pessoa", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Pessoa pessoa = new Pessoa
+                        PessoaModel pessoa = new PessoaModel
                         {
                             IdPessoa = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -55,9 +90,9 @@ namespace SmartBoard.Repositories
             return pessoas;
         }
 
-        public Pessoa Read(int id)
+        public PessoaModel Read(int id)
         {
-            Pessoa pessoa = null;
+            PessoaModel pessoa = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Pessoa WHERE id_pessoa = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -65,7 +100,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        pessoa = new Pessoa
+                        pessoa = new PessoaModel
                         {
                             IdPessoa = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -79,7 +114,7 @@ namespace SmartBoard.Repositories
             return pessoa;
         }
 
-        public void Update(Pessoa pessoa)
+        public void Update(PessoaModel pessoa)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE Pessoa SET nome = @Nome, email = @Email, senha = @Senha, tipo = @Tipo WHERE id_pessoa = @Id", connection))
             {

@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public TecnicoRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Tecnico tecnico)
+        public void Create(TecnicoModel tecnico)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Tecnico (id_pessoa, empresa) VALUES (@IdPessoa, @Empresa)", connection))
             {
@@ -28,16 +28,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Tecnico> Read()
+        public IEnumerable<TecnicoModel> Read()
         {
-            List<Tecnico> tecnicos = new List<Tecnico>();
+            List<TecnicoModel> tecnicos = new List<TecnicoModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tecnico", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Tecnico tecnico = new Tecnico
+                        TecnicoModel tecnico = new TecnicoModel
                         {
                             IdTecnico = reader.GetInt32(0),
                             IdPessoa = reader.GetInt32(1),
@@ -50,9 +50,9 @@ namespace SmartBoard.Repositories
             return tecnicos;
         }
 
-        public Tecnico Read(int id)
+        public TecnicoModel Read(int id)
         {
-            Tecnico tecnico = null;
+            TecnicoModel tecnico = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tecnico WHERE id_tecnico = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -60,7 +60,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        tecnico = new Tecnico
+                        tecnico = new TecnicoModel
                         {
                             IdTecnico = reader.GetInt32(0),
                             IdPessoa = reader.GetInt32(1),
@@ -72,7 +72,7 @@ namespace SmartBoard.Repositories
             return tecnico;
         }
 
-        public void Update(Tecnico tecnico)
+        public void Update(TecnicoModel tecnico)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE Tecnico SET id_pessoa = @IdPessoa, empresa = @Empresa WHERE id_tecnico = @Id", connection))
             {

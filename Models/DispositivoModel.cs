@@ -1,6 +1,6 @@
 namespace SmartBoard.Models
 {
-    public class Dispositivo
+    public class DispositivoModel
     {
         public int IdDispositivo { get; set; }
         public string Nome { get; set; }

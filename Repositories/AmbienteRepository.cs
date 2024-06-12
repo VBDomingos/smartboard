@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public AmbienteRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Ambiente ambiente)
+        public void Create(AmbienteModel ambiente)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Ambiente (nome, id_cliente) VALUES (@Nome, @IdCliente)", connection))
             {
@@ -28,16 +28,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Ambiente> Read()
+        public IEnumerable<AmbienteModel> Read()
         {
-            List<Ambiente> ambientes = new List<Ambiente>();
+            List<AmbienteModel> ambientes = new List<AmbienteModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Ambiente", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Ambiente ambiente = new Ambiente
+                        AmbienteModel ambiente = new AmbienteModel
                         {
                             IdAmbiente = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -50,9 +50,9 @@ namespace SmartBoard.Repositories
             return ambientes;
         }
 
-        public Ambiente Read(int id)
+        public AmbienteModel Read(int id)
         {
-            Ambiente ambiente = null;
+            AmbienteModel ambiente = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Ambiente WHERE id_ambiente = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -60,7 +60,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        ambiente = new Ambiente
+                        ambiente = new AmbienteModel
                         {
                             IdAmbiente = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -72,7 +72,7 @@ namespace SmartBoard.Repositories
             return ambiente;
         }
 
-        public void Update(Ambiente ambiente)
+        public void Update(AmbienteModel ambiente)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE Ambiente SET nome = @Nome, id_cliente = @IdCliente WHERE id_ambiente = @Id", connection))
             {

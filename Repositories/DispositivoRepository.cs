@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public DispositivoRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Dispositivo dispositivo)
+        public void Create(DispositivoModel dispositivo)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Dispositivo (nome, id_ambiente) VALUES (@Nome, @IdAmbiente)", connection))
             {
@@ -28,16 +28,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Dispositivo> Read()
+        public IEnumerable<DispositivoModel> Read()
         {
-            List<Dispositivo> dispositivos = new List<Dispositivo>();
+            List<DispositivoModel> dispositivos = new List<DispositivoModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Dispositivo", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Dispositivo dispositivo = new Dispositivo
+                        DispositivoModel dispositivo = new DispositivoModel
                         {
                             IdDispositivo = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -50,9 +50,9 @@ namespace SmartBoard.Repositories
             return dispositivos;
         }
 
-        public Dispositivo Read(int id)
+        public DispositivoModel Read(int id)
         {
-            Dispositivo dispositivo = null;
+            DispositivoModel dispositivo = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Dispositivo WHERE id_dispositivo = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -60,7 +60,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        dispositivo = new Dispositivo
+                        dispositivo = new DispositivoModel
                         {
                             IdDispositivo = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -72,7 +72,7 @@ namespace SmartBoard.Repositories
             return dispositivo;
         }
 
-        public void Update(Dispositivo dispositivo)
+        public void Update(DispositivoModel dispositivo)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE Dispositivo SET nome = @Nome, id_ambiente = @IdAmbiente WHERE id_dispositivo = @Id", connection))
             {

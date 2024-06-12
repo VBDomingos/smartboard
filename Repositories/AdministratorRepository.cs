@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public AdministradorRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(Administrador administrador)
+        public void Create(AdministradorModel administrador)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Administrador (id_pessoa) VALUES (@IdPessoa)", connection))
             {
@@ -27,16 +27,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<Administrador> Read()
+        public IEnumerable<AdministradorModel> Read()
         {
-            List<Administrador> administradores = new List<Administrador>();
+            List<AdministradorModel> administradores = new List<AdministradorModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Administrador", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Administrador administrador = new Administrador
+                        AdministradorModel administrador = new AdministradorModel
                         {
                             IdAdministrador = reader.GetInt32(0),
                             IdPessoa = reader.GetInt32(1)
@@ -48,9 +48,9 @@ namespace SmartBoard.Repositories
             return administradores;
         }
 
-        public Administrador Read(int id)
+        public AdministradorModel Read(int id)
         {
-            Administrador administrador = null;
+            AdministradorModel administrador = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM Administrador WHERE id_administrador = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -58,7 +58,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        administrador = new Administrador
+                        administrador = new AdministradorModel
                         {
                             IdAdministrador = reader.GetInt32(0),
                             IdPessoa = reader.GetInt32(1)
@@ -69,7 +69,7 @@ namespace SmartBoard.Repositories
             return administrador;
         }
 
-        public void Update(Administrador administrador)
+        public void Update(AdministradorModel administrador)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE Administrador SET id_pessoa = @IdPessoa WHERE id_administrador = @Id", connection))
             {

@@ -1,6 +1,6 @@
 namespace SmartBoard.Models
 {
-    public class Relatorio
+    public class RelatorioModel
     {
         public int IdRelatorio { get; set; }
         public int IdCliente { get; set; }

@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Data;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SmartBoard.Models;
+using SmartBoard.Repositories;
 
 namespace SmartBoard.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly IConfiguration _configuration;
+    private readonly IPessoaRepository _pessoaRepository;
 
-    public LoginController(IConfiguration configuration)
+    public LoginController(IPessoaRepository pessoaRepository)
     {
-        _configuration = configuration;
+        _pessoaRepository = pessoaRepository;
     }
+
 
     public IActionResult Index()
     {
@@ -41,37 +46,8 @@ public class LoginController : Controller
         {
             if (ModelState.IsValid)
             {
-                Pessoa pessoa = null;
-
-                string connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT id_pessoa, nome, email, TipoPessoa, cep, numero, ativo FROM Pessoas WHERE Email = @Login AND senha = @Password";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.Add("@Login", SqlDbType.VarChar).Value = loginModel.Login;
-                        cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = loginModel.Senha;
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                pessoa = new Pessoa
-                                {
-                                    IdPessoa = (int)reader["id_pessoa"],
-                                    Email = reader["email"].ToString(),
-                                    Nome = reader["Nome"].ToString(),
-                                    TipoPessoa = reader["TipoPessoa"].ToString(),
-                                    cep = reader["cep"].ToString(),
-                                    numero = Convert.ToInt16(reader["numero"]),
-                                    ativo = Convert.ToInt16(reader["ativo"])
-                                };
-                            }
-                        }
-                    }
-                }
+                // fazendo consulta pelo email e senha
+                PessoaModel pessoa = _pessoaRepository.Login(loginModel.Login, loginModel.Senha);
                 if (pessoa != null)
                 {
                     if (pessoa.ativo == 1)
@@ -84,14 +60,23 @@ public class LoginController : Controller
                         HttpContext.Session.SetString("cep", pessoa.cep);
                         HttpContext.Session.SetString("numero", pessoa.numero.ToString());
 
-                        if(Convert.ToChar(pessoa.TipoPessoa) == 'C') return RedirectToAction("HomeClient", "DeviceClient");
+                        if (Convert.ToChar(pessoa.TipoPessoa) == 'C') return RedirectToAction("HomeClient", "DeviceClient");
                         else if(Convert.ToChar(pessoa.TipoPessoa) == 'T') return RedirectToAction("HomeTecnico", "DeviceTecnico");
                         else if(Convert.ToChar(pessoa.TipoPessoa) == 'A') return RedirectToAction("HomeAdmin", "DeviceAdmin");
 
+                        //var claims = new List<Claim>
+                        //{
+                        //    new Claim(ClaimTypes.Name, "Nome", pessoa.Nome)
+                        //};
+                        //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        //var authProperties = new AuthenticationProperties();
+
+                        //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
                     }
                     else
                     {
+                        // mensagem para usuário inátivo = 0
                         TempData["MensagemErro"] = $"Usuário inativo";
                         return View("Index");
                     }
@@ -110,5 +95,12 @@ public class LoginController : Controller
             TempData["MensagemErro"] = $"Erro ao tentar fazer login, detalhe: {erro.Message}";
             return RedirectToAction("Index");
         }
+    }
+
+    // Fazer logout
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index");
     }
 }

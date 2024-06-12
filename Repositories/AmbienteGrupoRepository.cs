@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public AmbienteGrupoRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(AmbienteGrupo ambienteGrupo)
+        public void Create(AmbienteGrupoModel ambienteGrupo)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO AmbienteGrupo (id_grupo, id_ambiente) VALUES (@IdGrupo, @IdAmbiente)", connection))
             {
@@ -29,16 +29,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<AmbienteGrupo> Read()
+        public IEnumerable<AmbienteGrupoModel> Read()
         {
-            List<AmbienteGrupo> ambientesGrupos = new List<AmbienteGrupo>();
+            List<AmbienteGrupoModel> ambientesGrupos = new List<AmbienteGrupoModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM AmbienteGrupo", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        AmbienteGrupo ambienteGrupo = new AmbienteGrupo
+                        AmbienteGrupoModel ambienteGrupo = new AmbienteGrupoModel
                         {
                             IdGrupo = reader.GetInt32(0),
                             IdAmbiente = reader.GetInt32(1)

@@ -1,8 +1,8 @@
 namespace SmartBoard.Models
 {
-    public class Ambiente
+    public class GrupoAmbienteModel
     {
-        public int IdAmbiente { get; set; }
+        public int IdGrupo { get; set; }
         public string Nome { get; set; }
         public int IdCliente { get; set; }
     }

@@ -9,7 +9,7 @@ namespace SmartBoard.Repositories
     {
         public GrupoAmbienteRepository(IConfiguration configuration) : base(configuration) { }
 
-        public void Create(GrupoAmbiente grupoAmbiente)
+        public void Create(GrupoAmbienteModel grupoAmbiente)
         {
             using (SqlCommand cmd = new SqlCommand("INSERT INTO GrupoAmbiente (nome, id_cliente) VALUES (@Nome, @IdCliente)", connection))
             {
@@ -28,16 +28,16 @@ namespace SmartBoard.Repositories
             }
         }
 
-        public IEnumerable<GrupoAmbiente> Read()
+        public IEnumerable<GrupoAmbienteModel> Read()
         {
-            List<GrupoAmbiente> gruposAmbiente = new List<GrupoAmbiente>();
+            List<GrupoAmbienteModel> gruposAmbiente = new List<GrupoAmbienteModel>();
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM GrupoAmbiente", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        GrupoAmbiente grupoAmbiente = new GrupoAmbiente
+                        GrupoAmbienteModel grupoAmbiente = new GrupoAmbienteModel
                         {
                             IdGrupo = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -50,9 +50,9 @@ namespace SmartBoard.Repositories
             return gruposAmbiente;
         }
 
-        public GrupoAmbiente Read(int id)
+        public GrupoAmbienteModel Read(int id)
         {
-            GrupoAmbiente grupoAmbiente = null;
+            GrupoAmbienteModel grupoAmbiente = null;
             using (SqlCommand cmd = new SqlCommand("SELECT * FROM GrupoAmbiente WHERE id_grupo = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
@@ -60,7 +60,7 @@ namespace SmartBoard.Repositories
                 {
                     if (reader.Read())
                     {
-                        grupoAmbiente = new GrupoAmbiente
+                        grupoAmbiente = new GrupoAmbienteModel
                         {
                             IdGrupo = reader.GetInt32(0),
                             Nome = reader.GetString(1),
@@ -72,7 +72,7 @@ namespace SmartBoard.Repositories
             return grupoAmbiente;
         }
 
-        public void Update(GrupoAmbiente grupoAmbiente)
+        public void Update(GrupoAmbienteModel grupoAmbiente)
         {
             using (SqlCommand cmd = new SqlCommand("UPDATE GrupoAmbiente SET nome = @Nome, id_cliente = @IdCliente WHERE id_grupo = @Id", connection))
             {
