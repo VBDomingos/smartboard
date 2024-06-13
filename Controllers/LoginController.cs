@@ -50,15 +50,15 @@ public class LoginController : Controller
                 PessoaModel pessoa = _pessoaRepository.Login(loginModel.Login, loginModel.Senha);
                 if (pessoa != null)
                 {
-                    if (pessoa.ativo == 1)
+                    if (pessoa.Ativo == 1)
                     {
                         // Criação da sessão
                         HttpContext.Session.SetString("id_pessoa", pessoa.IdPessoa.ToString());
                         HttpContext.Session.SetString("Email", pessoa.Email);
                         HttpContext.Session.SetString("Nome", pessoa.Nome);
-                        HttpContext.Session.SetString("TipoPessoa", pessoa.TipoPessoa);
-                        HttpContext.Session.SetString("cep", pessoa.cep);
-                        HttpContext.Session.SetString("numero", pessoa.numero.ToString());
+                        HttpContext.Session.SetString("TipoPessoa", pessoa.TipoPessoa.ToString());
+                        HttpContext.Session.SetString("cep", pessoa.Cep);
+                        HttpContext.Session.SetString("numero", pessoa.Numero.ToString());
 
                         if (Convert.ToChar(pessoa.TipoPessoa) == 'C') return RedirectToAction("HomeClient", "DeviceClient");
                         else if(Convert.ToChar(pessoa.TipoPessoa) == 'T') return RedirectToAction("HomeTecnico", "DeviceTecnico");

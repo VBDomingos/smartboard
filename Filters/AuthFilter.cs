@@ -16,9 +16,9 @@ namespace SmartBoard.Filters
             }
             else
             {
-                if (Convert.ToChar(user) == 'C' && context.RouteData.Values.Values.Last().ToString() != "HomeClient") context.Result = new RedirectToActionResult("HomeClient", "DeviceClient", null);
-                else if (Convert.ToChar(user) == 'T' && context.RouteData.Values.Values.Last().ToString() != "HomeTecnico") context.Result = new RedirectToActionResult("HomeTecnico", "DeviceTecnico", null);
-                else if (Convert.ToChar(user) == 'A' && context.RouteData.Values.Values.Last().ToString() != "HomeAdmin") context.Result = new RedirectToActionResult("HomeAdmin", "DeviceAdmin", null);
+                if (Convert.ToChar(user) == 'C' && context.RouteData.Values.Values.First().ToString() != "DeviceClient") context.Result = new RedirectToActionResult("HomeClient", "DeviceClient", null);
+                else if (Convert.ToChar(user) == 'T' && context.RouteData.Values.Values.First().ToString() != "DeviceTecnico") context.Result = new RedirectToActionResult("HomeTecnico", "DeviceTecnico", null);
+                else if (Convert.ToChar(user) == 'A' && context.RouteData.Values.Values.First().ToString() != "DeviceAdmin") context.Result = new RedirectToActionResult("HomeAdmin", "DeviceAdmin", null);
             }
 
             base.OnActionExecuting(context);

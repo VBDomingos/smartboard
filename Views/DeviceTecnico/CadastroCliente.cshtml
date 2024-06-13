@@ -1,0 +1,100 @@
+﻿@using SmartBoard.Models
+@model PessoaClienteViewModel
+@{
+    Layout = "_LayoutTecnico";
+    ViewData["Title"] = "SmartBoard Do TECNICO";
+
+}
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-rose-600 text-center" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+
+<div class="bg-white rounded-xl shadow-lg py-7 px-7 flex mt-5 justify-center">
+    <div class="flex flex-wrap justify-center align-middle w-full">
+        <form asp-action="CadastrarCliente" method="post" class="w-5/12">
+            <div class="form-group mb-3 mt-3">
+                <label for="Nome">Nome Completo: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Pessoa.Nome" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Pessoa.Nome)
+            </div>
+            <div class="form-group mb-3 mt-3">
+                <label for="Email">Email: </label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                        <svg class="w-4 h-4 text-black-500 white:text-black-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                            <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+                            <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
+                        </svg>
+                    </div>
+                    <input type="text" asp-for="Pessoa.Email" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+                            ps-10 p-2.5" placeholder="email@dominio.com" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Pessoa.Email)
+            </div>
+            <div class="form-group mb-3 mt-3">
+                <label for="exampleInputPassword1">Senha: </label>
+                <input type="password" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" asp-for="Pessoa.Senha" placeholder="Sua Senha">
+                @Html.ValidationMessageFor(x => x.Pessoa.Senha)
+            </div>
+            <div class="form-group mb-3 mt-3">
+                <label for="cpf">CPF: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Pessoa.Cpf" maxlength="11" class="form-control border
+                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Pessoa.Cpf)
+            </div>
+            <div class="form-group mb-3 mt-3">
+                <label for="cep">CEP: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Pessoa.Cep" maxlength="9" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Pessoa.Cep)
+            </div>
+            <!-- campos de enderço, logradouro, cidade...-->
+
+            <div class="form-group mb-3 mt-3">
+                <label for="numero">Número: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Pessoa.Numero"  class="form-control border
+                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Pessoa.Numero)
+            </div>
+
+            <div class="form-group mb-3 mt-3">
+                <label for="telefone">Celular: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Telefone.Celular"  maxlength="15" type="text" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+                @Html.ValidationMessageFor(x => x.Telefone.Celular)
+            </div>
+
+            <div class="form-group mb-3 mt-3">
+                <label for="telefoneComercial">Telefone Comercial: </label>
+                <div class="relative">
+                    <input type="text" asp-for="Telefone.Comercial"  maxlength="15" class="form-control border
+                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                </div>
+            </div>
+
+            <button type="submit" class="text-white bg-gradient-to-r from-[#202020] via-[#171717] to-[#030303]
+                    hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-[#404040]
+                    dark:focus:ring-[#000000] shadow-lg shadow-gray dark:shadow-lg dark:shadow-black
+                    font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full">
+                Cadastrar
+            </button>
+        </form>
+    </div>
+</div>

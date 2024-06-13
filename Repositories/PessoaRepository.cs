@@ -12,14 +12,25 @@ namespace SmartBoard.Repositories
         {
         }
 
-        public void Create(PessoaModel pessoa)
+        public void CreateClient(PessoaClienteViewModel pessoaClienteModel)
         {
-            using (SqlCommand cmd = new SqlCommand("INSERT INTO Pessoa (nome, email, senha, tipo) VALUES (@nome, @Email, @Senha, @Tipo)", connection))
+            string insertCliente = "INSERT INTO Pessoas (nome, email, senha, cpf, cep, numero, ativo, TipoPessoa) VALUES (@nome, @Email, @Senha, @cpf, @cep, @numero, @ativo, @Tipo);" +
+                "DECLARE @id_pessoa INT; SET @id_pessoa = SCOPE_IDENTITY();" +
+                "INSERT INTO clientes (id_pessoa) VALUES (@id_pessoa);" +
+                "INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, @telefone);";
+            if (pessoaClienteModel.Telefone.Comercial != null) insertCliente += "INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, @comercial);";
+            using (SqlCommand cmd = new SqlCommand(insertCliente, connection))
             {
-                cmd.Parameters.AddWithValue("@Nome", pessoa.Nome);
-                cmd.Parameters.AddWithValue("@Email", pessoa.Email);
-                cmd.Parameters.AddWithValue("@Senha", pessoa.Senha);
-                cmd.Parameters.AddWithValue("@Tipo", pessoa.TipoPessoa);
+                cmd.Parameters.AddWithValue("@nome", pessoaClienteModel.Pessoa.Nome);
+                cmd.Parameters.AddWithValue("@Email", pessoaClienteModel.Pessoa.Email);
+                cmd.Parameters.AddWithValue("@Senha", pessoaClienteModel.Pessoa.Senha);
+                cmd.Parameters.AddWithValue("@cpf", pessoaClienteModel.Pessoa.Cpf);
+                cmd.Parameters.AddWithValue("@cep", pessoaClienteModel.Pessoa.Cep);
+                cmd.Parameters.AddWithValue("@numero", pessoaClienteModel.Pessoa.Numero);
+                cmd.Parameters.AddWithValue("@ativo", 1);
+                cmd.Parameters.AddWithValue("@Tipo", "C");
+                cmd.Parameters.AddWithValue("@telefone", pessoaClienteModel.Telefone.Celular);
+                cmd.Parameters.AddWithValue("@comercial", pessoaClienteModel.Telefone.Comercial);
 
                 cmd.ExecuteNonQuery();
             }
@@ -53,10 +64,10 @@ namespace SmartBoard.Repositories
                             IdPessoa = (int)reader["id_pessoa"],
                             Email = reader["email"].ToString(),
                             Nome = reader["Nome"].ToString(),
-                            TipoPessoa = reader["TipoPessoa"].ToString(),
-                            cep = reader["cep"].ToString(),
-                            numero = Convert.ToInt16(reader["numero"]),
-                            ativo = Convert.ToInt16(reader["ativo"])
+                            TipoPessoa = Convert.ToChar(reader["TipoPessoa"]),
+                            Cep = reader["cep"].ToString(),
+                            Numero = Convert.ToInt16(reader["numero"]),
+                            Ativo = Convert.ToInt16(reader["ativo"])
                         };
                     }
                 }
@@ -81,7 +92,7 @@ namespace SmartBoard.Repositories
                             Nome = reader.GetString(1),
                             Email = reader.GetString(2),
                             Senha = reader.GetString(3),
-                            TipoPessoa = reader.GetString(4)
+                            TipoPessoa = Convert.ToChar(reader.GetString(4))
                         };
                         pessoas.Add(pessoa);
                     }
@@ -106,7 +117,7 @@ namespace SmartBoard.Repositories
                             Nome = reader.GetString(1),
                             Email = reader.GetString(2),
                             Senha = reader.GetString(3),
-                            TipoPessoa = reader.GetString(4)
+                            TipoPessoa = Convert.ToChar(reader.GetString(4))
                         };
                     }
                 }

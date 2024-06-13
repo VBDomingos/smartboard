@@ -38,24 +38,6 @@
         window.addEventListener('DOMContentLoaded', (event) => {
             handleResize();
         });
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
-            
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const modalId = this.getAttribute('data-modal-toggle');
-                    const modal = document.getElementById(modalId);
-
-                    if (modal.classList.contains('hidden')) {
-                        modal.classList.remove('hidden');
-                        modal.classList.add('flex');
-                    } else {
-                        modal.classList.remove('flex');
-                        modal.classList.add('hidden');
-                    }
-                });
-            });
-        });
 
     </script>
 </head>
@@ -121,6 +103,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

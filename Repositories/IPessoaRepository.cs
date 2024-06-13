@@ -4,7 +4,7 @@ namespace SmartBoard.Repositories
 {
     public interface IPessoaRepository
     {
-        void Create(PessoaModel pessoa);
+        void CreateClient(PessoaClienteViewModel pessoaClienteModel);
         PessoaModel Read(int id);
         IEnumerable<PessoaModel> Read();
         void Update(PessoaModel pessoa);

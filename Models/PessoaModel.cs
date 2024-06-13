@@ -1,15 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
 namespace SmartBoard.Models
 {
     public class PessoaModel
     {
         public int IdPessoa { get; set; }
+        [Required(ErrorMessage = "Digite o Nome")]
         public string Nome { get; set; }
+        [Required(ErrorMessage = "Digite o email")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Digite a senha")]
         public string Senha { get; set; }
-        public string cpf { get; set; }
-        public string cep { get; set; }
-        public int numero { get; set; }
-        public int ativo { get; set; }
-        public string TipoPessoa { get; set; }
+        [Required(ErrorMessage = "Digite o cpf")]
+        public string Cpf { get; set; }
+        [Required(ErrorMessage = "Digite o cep")]
+        public string Cep { get; set; }
+        [Required(ErrorMessage = "Digite o número da casa")]
+        public Nullable<int> Numero { get; set; }
+        public Nullable<int> Ativo { get; set; }
+        public Char TipoPessoa { get; set; }
     }
 }
