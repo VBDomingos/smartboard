@@ -47,11 +47,34 @@ public class ArduinoController : Controller
         return RedirectToAction("HomeClient", "DeviceClient");
     }
 
+    [HttpPost]
+    public IActionResult SendText(string inputText)
+    {
+        SendCommand('2');
+        SendString(inputText);
+        return RedirectToAction("HomeClient", "DeviceClient");
+    }
+
+    [HttpPost]
+    public IActionResult SetAlarm(char alarmSeconds)
+    {
+        SendCommand(alarmSeconds);
+        return RedirectToAction("HomeClient", "DeviceClient");
+    }
+
     private void SendCommand(char command)
     {
         if (_serialPort.IsOpen)
         {
             _serialPort.Write(command.ToString());
+        }
+    }
+
+        private void SendString(string text)
+    {
+        if (_serialPort.IsOpen)
+        {
+            _serialPort.Write(text);
         }
     }
 }
