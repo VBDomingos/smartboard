@@ -2,6 +2,20 @@
     Layout = "_LayoutTecnico";
     ViewData["Title"] = "SmartBoard Do TECNICO";
 }
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-danger text-rose-600 text-center" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
 <div class="bg-white rounded-xl shadow-lg py-7 px-7 flex mt-5 justify-center">
     <div class="flex flex-wrap justify-center align-middle w-full">
         <a asp-controller="DeviceTecnico" asp-action="CadastroCliente" class="bg-gray-200 p-4 rounded-xl flex flex-col items-center h-48 m-3 w-1/4 md:w-1/4 lg:w-1/5 justify-center items-center shadow-xl hover:shadow-orange-200 hover:cursor-pointer hover:scale-110 hover:bg-gray-300 hover:text-gray-800">

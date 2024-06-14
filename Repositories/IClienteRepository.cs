@@ -9,5 +9,7 @@ namespace SmartBoard.Repositories
         IEnumerable<ClienteModel> Read();
         void Update(ClienteModel cliente);
         void Delete(int id);
+
+        Tuple<List<ClienteModel>, List<PessoaModel>, List<TelefoneModel>> GetAllClienteInfo();
     }
 }

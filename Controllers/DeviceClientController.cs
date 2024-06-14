@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SmartBoard.Models;
 using SmartBoard.Filters;
+using SmartBoard.Repositories;
 
 namespace SmartBoard.Controllers;
 
@@ -10,6 +11,7 @@ public class DeviceClientController : Controller
 {
     public IActionResult HomeClient()
     {
+        
         return View();
     }
 

@@ -2,15 +2,26 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SmartBoard.Models;
 using SmartBoard.Filters;
+using SmartBoard.Repositories;
+using System.Reflection;
 
 namespace SmartBoard.Controllers;
 
 [AuthFilter]
 public class DeviceAdminController : Controller
 {
+    private readonly IClienteRepository _clienteRepository;
+
+    public DeviceAdminController (IClienteRepository clienteRepository)
+    {
+        _clienteRepository = clienteRepository;
+    }
+
     public IActionResult HomeAdmin()
     {
-        return View();
+        Tuple<List<ClienteModel>, List<PessoaModel>, List<TelefoneModel>> clienteDados = _clienteRepository.GetAllClienteInfo();
+
+        return View(clienteDados);
     }
 
     public IActionResult Privacy()

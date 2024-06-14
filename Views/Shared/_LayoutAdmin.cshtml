@@ -6,11 +6,12 @@
     <title>@ViewData["Title"] - SmartBoard</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link href="//cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/SmartBoard.styles.css" asp-append-version="true" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer>
         function toggleMenu() {
-          let menuMobile = document.getElementById('mobile-menu');
+            let menuMobile = document.getElementById('mobile-menu');
             if (menuMobile.classList.contains('hidden')) {
                 menuMobile.classList.remove('hidden');
                 menuMobile.classList.add('active');
@@ -21,7 +22,6 @@
                 //document.querySelector('.icon').src = "assets/img/close_white_36dp.svg";
             }
         }
-
 
         function handleResize() {
             let menuMobile = document.getElementById('mobile-menu');
@@ -38,24 +38,6 @@
 
         window.addEventListener('DOMContentLoaded', (event) => {
             handleResize();
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
-            
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const modalId = this.getAttribute('data-modal-toggle');
-                    const modal = document.getElementById(modalId);
-
-                    if (modal.classList.contains('hidden')) {
-                        modal.classList.remove('hidden');
-                        modal.classList.add('flex');
-                    } else {
-                        modal.classList.remove('flex');
-                        modal.classList.add('hidden');
-                    }
-                });
-            });
         });
 
     </script>
@@ -85,7 +67,7 @@
                     </svg>
                     <h2 class="font-normal text-2xl leading-6 text-gray-800 pl-4">App</h2>
                 </div>
-                 <!-- non hidden itens menu responsive layout -->
+                <!-- non hidden itens menu responsive layout -->
                 <div class="hidden md:flex space-x-5 ml-auto">
                     <span class="text-gray-700 text-base">Olá, @Context.Session.GetString("Nome")</span>
                     <a asp-action="Logout" asp-controller="Login" class="text-gray-700 text-center hover:text-yellow-500 "> Sair </a>
@@ -106,7 +88,6 @@
                     </div>
                 </div>
             </div>
-        
         </header>
 
             <main role="main" class="pb-3">
@@ -123,6 +104,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

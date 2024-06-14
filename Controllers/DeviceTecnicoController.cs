@@ -44,6 +44,7 @@ public class DeviceTecnicoController : Controller
                 try
                 {
                     _pessoaRepository.CreateClient(pessoaClienteModel);
+                    TempData["MensagemSucesso"] = $"O Cliente Foi Cadastrado Com Sucesso";
                     return RedirectToAction("HomeTecnico");
                 }
                 catch (Exception erro)
