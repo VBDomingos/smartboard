@@ -23,7 +23,7 @@ Insert into TipoDispositivos values ('Alarme')
                 INSERT INTO Administradores(id_pessoa) VALUES (@id_pessoa);
                 INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, 17991111111);
 
-  INSERT INTO Pessoas (nome, email, senha, cpf, cep, numero, ativo, TipoPessoa) VALUES ('Tecnico', 'tecnico@tecnico.com', '123456', '22222222222', '22222222', 222, 1, 'A');
+  INSERT INTO Pessoas (nome, email, senha, cpf, cep, numero, ativo, TipoPessoa) VALUES ('Tecnico', 'tecnico@tecnico.com', '123456', '22222222222', '22222222', 222, 1, 'T');
                 DECLARE @id_pessoa INT; SET @id_pessoa = SCOPE_IDENTITY();
                 INSERT INTO Tecnicos(id_pessoa) VALUES (@id_pessoa);
                 INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, 17991111111);
