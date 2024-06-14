@@ -60,16 +60,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-gray-700 hover:text-orange-400">
-                        <td>Maria Silva</td>
-                        <td>123.456.789-00</td>
-                        <td>(11) 98765-4321</td>
-                        <td>Sim</td>
-                        <td>
-                            <a role="button" class="btn btn-primary" asp-controller="DeviceAdmin" asp-action="EditarCliente">Editar</a>
-                            <a role="button" class="btn btn-danger" asp-controller="DeviceAdmin" asp-action="ApagarClienteConfirmacao">Apagar</a>
-                        </td>
-                    </tr>
                     @if(Model != null && Model.Item2.Any())
                     {
                         foreach(PessoaModel pessoa in Model.Item2)
