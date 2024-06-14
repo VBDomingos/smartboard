@@ -36,7 +36,7 @@ namespace SmartBoard.Repositories
             List<ClienteModel> cliente = new List<ClienteModel>();
 
             using (SqlCommand cmd = new SqlCommand("WITH TelefonePrincipal AS (SELECT t.id_pessoa, t.numero,ROW_NUMBER() OVER (PARTITION BY t.id_pessoa ORDER BY t.id_pessoa ) AS rn FROM telefones t) " +
-                "SELECT C.id_cliente, P.id_pessoa, P.nome, P.email, p.cpf, p.cep, p.numero, p.ativo, p.tipopessoa, t.numero FROM Clientes C " +
+                "SELECT C.id_cliente, P.id_pessoa, P.nome, P.email, p.cpf, p.cep, p.numero, p.ativo, p.tipopessoa, t.numero as telefone FROM Clientes C " +
                 "inner join Pessoas P on p.id_pessoa = C.id_pessoa " +
                 "LEFT JOIN TelefonePrincipal t ON p.id_pessoa = t.id_pessoa AND t.rn = 1", connection))
             {
@@ -59,7 +59,7 @@ namespace SmartBoard.Repositories
                             Cpf = reader["cpf"].ToString(),
                             Cep = reader["cep"].ToString(),
                             Numero = (int)(reader["numero"]),
-                            Ativo = Convert.ToInt16(reader["ativo"]),
+                            Ativo = (bool)(reader["ativo"]),
                             TipoPessoa = Convert.ToChar(reader["tipopessoa"])
                         };
                         pessoa.Add(pessoaAux);
@@ -68,10 +68,58 @@ namespace SmartBoard.Repositories
                         {
                             IdTelefone = (int)reader["id_pessoa"],
                             IdPessoa = (int)reader["id_pessoa"],
-                            Celular = (int)reader["numero"]
+                            Numero = Convert.ToInt64(reader["telefone"])
                         };
 
                         telefone.Add(telefoneAux);
+                    }
+                }
+            }
+
+            return Tuple.Create(cliente, pessoa, telefone);
+        }
+
+        public Tuple<ClienteModel, PessoaUpdateModel, TelefoneModel> GetClientById(int idCliente)
+        {
+            PessoaUpdateModel pessoa = new PessoaUpdateModel();
+            TelefoneModel telefone = new TelefoneModel();
+            ClienteModel cliente = new ClienteModel();
+
+            using (SqlCommand cmd = new SqlCommand("SELECT C.id_cliente, P.id_pessoa, P.nome, P.email, p.cpf, p.cep, p.numero, p.ativo, p.tipopessoa, t.numero as telefone FROM Clientes C " +
+                "inner join Pessoas P on p.id_pessoa = C.id_pessoa " +
+                "LEFT JOIN Telefones t ON p.id_pessoa = t.id_pessoa where C.id_cliente = @idcliente", connection))
+            {
+                cmd.Parameters.AddWithValue("@idcliente", idCliente);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cliente = new ClienteModel
+                        {
+                            IdCliente = (int)reader["id_cliente"],
+                            IdPessoa = (int)reader["id_pessoa"]
+                        };
+
+                        pessoa = new PessoaUpdateModel
+                        {
+                            IdPessoa = (int)reader["id_pessoa"],
+                            Email = reader["email"].ToString(),
+                            Nome = reader["nome"].ToString(),
+                            Cpf = reader["cpf"].ToString(),
+                            Cep = reader["cep"].ToString(),
+                            Numero = (int)(reader["numero"]),
+                            Ativo = (bool)(reader["ativo"]),
+                            TipoPessoa = Convert.ToChar(reader["tipopessoa"])
+                        };
+                        
+
+                        telefone = new TelefoneModel
+                        {
+                            IdTelefone = (int)reader["id_pessoa"],
+                            IdPessoa = (int)reader["id_pessoa"],
+                            Numero = Convert.ToInt64(reader["telefone"])
+                        };
+
                     }
                 }
             }
@@ -121,13 +169,21 @@ namespace SmartBoard.Repositories
             return cliente;
         }
 
-        public void Update(ClienteModel cliente)
+        public void UpdatePessoaByCliente(PessoaClienteUpdateViewModel pessoaClienteView)
         {
-            using (SqlCommand cmd = new SqlCommand("UPDATE Cliente SET id_pessoa = @IdPessoa WHERE id_cliente = @Id", connection))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Pessoas SET nome = @nome, email = @email, cpf = @cpf, cep = @cep, numero = @numero, ativo = @ativo WHERE id_pessoa = @Id; " +
+                "UPDATE Telefones set numero = @telefone where id_pessoa = @Id", connection))
             {
-                cmd.Parameters.AddWithValue("@IdPessoa", cliente.IdPessoa);
-                cmd.Parameters.AddWithValue("@Id", cliente.IdCliente);
-                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@nome", pessoaClienteView.Pessoa.Nome);
+                cmd.Parameters.AddWithValue("@email", pessoaClienteView.Pessoa.Email);
+                cmd.Parameters.AddWithValue("@cpf", pessoaClienteView.Pessoa.Cpf);
+                cmd.Parameters.AddWithValue("@cep", pessoaClienteView.Pessoa.Cep);
+                cmd.Parameters.AddWithValue("@numero", pessoaClienteView.Pessoa.Numero);
+                cmd.Parameters.AddWithValue("@ativo", pessoaClienteView.Pessoa.Ativo == true ? 1 : 0);
+                cmd.Parameters.AddWithValue("@Id", pessoaClienteView.Pessoa.IdPessoa);
+                cmd.Parameters.AddWithValue("@telefone", pessoaClienteView.Telefone.Numero);
+                int rows = cmd.ExecuteNonQuery();
+
             }
         }
     }

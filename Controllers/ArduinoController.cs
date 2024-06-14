@@ -36,8 +36,7 @@ public class ArduinoController : Controller
     [HttpPost]
     public IActionResult TurnOffLed()
     {
-        getporta
-        string tosend = '0' + getporta
+        string tosend = "08";
         SendString(tosend); // comando 0, porta 8
         return RedirectToAction("HomeClient", "DeviceClient");
     }

@@ -6,8 +6,7 @@ namespace SmartBoard.Repositories
     {
         void Create(AmbienteModel ambiente);
         AmbienteModel Read(int id);
-        IEnumerable<AmbienteModel> Read();
-        void Update(AmbienteModel ambiente);
-        void Delete(int id);
+
+        IEnumerable<AmbienteModel> GetAllAmbientes();
     }
 }

@@ -18,6 +18,9 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
+builder.Services.AddTransient<IDispositivoRepository, DispositivoRepository>();
+builder.Services.AddTransient<IAmbienteRepository, AmbienteRepository>();
+builder.Services.AddTransient<ITipoDispositivoRepository, TipoDispositivoRepository>();
 
 var app = builder.Build();
 

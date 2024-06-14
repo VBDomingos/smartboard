@@ -5,13 +5,13 @@
 
 @if (TempData["MensagemSucesso"] != null)
 {
-    <div class="alert alert-danger text-rose-600 text-center" role="alert">
+    <div class="alert alert-success text-center" role="alert">
         @TempData["MensagemSucesso"]
     </div>
 }
 @if (TempData["MensagemErro"] != null)
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger text-rose-600 text-center" role="alert">
         @TempData["MensagemErro"]
     </div>
 }
@@ -24,9 +24,11 @@
                 <span class="mt-2 text-center font-medium">Novo Cliente</span>
             </div>
         </a>
-        <div class="bg-gray-200 p-4 rounded-xl flex flex-col items-center h-48 m-3 w-1/4 md:w-1/4 lg:w-1/5 justify-center items-center shadow-xl hover:shadow-orange-200 hover:cursor-pointer hover:scale-110 hover:bg-gray-300">
-            <span class="text-4xl"></span>
-            <span class="mt-2 text-center font-medium">Listar Clientes</span>
-        </div>
+        <a asp-controller="DeviceTecnico" asp-action="ListarClientes" class="bg-gray-200 p-4 rounded-xl flex flex-col items-center h-48 m-3 w-1/4 md:w-1/4 lg:w-1/5 justify-center items-center shadow-xl hover:shadow-orange-200 hover:cursor-pointer hover:scale-110 hover:bg-gray-300 hover:text-gray-800">
+            <div>
+                <span class="text-4xl"></span>
+                <span class="mt-2 text-center font-medium">Listar Clientes</span>
+            </div>
+        </a>
     </div> 
 </div>

@@ -18,7 +18,6 @@ namespace SmartBoard.Repositories
                 "DECLARE @id_pessoa INT; SET @id_pessoa = SCOPE_IDENTITY();" +
                 "INSERT INTO clientes (id_pessoa) VALUES (@id_pessoa);" +
                 "INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, @telefone);";
-            if (pessoaClienteModel.Telefone.Comercial != null) insertCliente += "INSERT INTO telefones (id_pessoa, numero) Values (@id_pessoa, @comercial);";
             using (SqlCommand cmd = new SqlCommand(insertCliente, connection))
             {
                 cmd.Parameters.AddWithValue("@nome", pessoaClienteModel.Pessoa.Nome);
@@ -29,8 +28,7 @@ namespace SmartBoard.Repositories
                 cmd.Parameters.AddWithValue("@numero", pessoaClienteModel.Pessoa.Numero);
                 cmd.Parameters.AddWithValue("@ativo", 1);
                 cmd.Parameters.AddWithValue("@Tipo", "C");
-                cmd.Parameters.AddWithValue("@telefone", pessoaClienteModel.Telefone.Celular);
-                cmd.Parameters.AddWithValue("@comercial", pessoaClienteModel.Telefone.Comercial);
+                cmd.Parameters.AddWithValue("@telefone", pessoaClienteModel.Telefone.Numero);
 
                 cmd.ExecuteNonQuery();
             }
@@ -67,7 +65,7 @@ namespace SmartBoard.Repositories
                             TipoPessoa = Convert.ToChar(reader["TipoPessoa"]),
                             Cep = reader["cep"].ToString(),
                             Numero = Convert.ToInt16(reader["numero"]),
-                            Ativo = Convert.ToInt16(reader["ativo"])
+                            Ativo = (bool)(reader["ativo"])
                         };
                     }
                 }

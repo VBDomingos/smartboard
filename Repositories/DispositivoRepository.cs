@@ -50,26 +50,59 @@ namespace SmartBoard.Repositories
             return dispositivos;
         }
 
-        public DispositivoModel Read(int id)
+        public Tuple<ClienteModel, List<DispositivoModel>, List<AmbienteModel>, List<TipoDispositivoModel>> GetAllDispositivosByCliente(int id)
         {
-            DispositivoModel dispositivo = null;
-            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Dispositivo WHERE id_dispositivo = @id", connection))
+            ClienteModel cliente = new ClienteModel();
+            List<DispositivoModel> dispositivo = new List<DispositivoModel>();
+            List<AmbienteModel> ambiente = new List<AmbienteModel>();
+            List<TipoDispositivoModel> tipoDispositivo = new List<TipoDispositivoModel>();
+            using (SqlCommand cmd = new SqlCommand("SELECT d.id_dispositivo, d.nomedispositivo, d.porta, c.id_cliente, t.nometipodispositivo, t.id_tipodispositivo, a.nomeambiente from Dispositivos d, Ambientes a, Clientes c, tipoDispositivos t " +
+                "where d.id_cliente = c.id_cliente and d.id_ambiente = a.id_ambiente and d.id_tipodispositivo = t.id_tipodispositivo and id_dispositivo = @id", connection))
             {
                 cmd.Parameters.AddWithValue("@id", id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        dispositivo = new DispositivoModel
+                        while (reader.Read())
                         {
-                            IdDispositivo = reader.GetInt32(0),
-                            Nome = reader.GetString(1),
-                            IdAmbiente = reader.GetInt32(2)
-                        };
+                            var dispositivoAux = new DispositivoModel
+                            {
+                                IdDispositivo = (int)reader["id_dispositivo"],
+                                Nome = reader["nomedispositivo"].ToString(),
+                                Porta = (int)reader["porta"],
+                                IdCliente = (int)reader["id_cliente"],
+                                IdTecnico = (int)reader["id_tecnico"],
+                                IdTipoDispositivo = (int)reader["id_tipodispositivo"],
+                                IdAmbiente = reader.GetInt32(2)
+                            };
+                            dispositivo.Add(dispositivoAux);
+
+                            var clienteAux = new ClienteModel
+                            {
+                                IdCliente = (int)reader["id_cliente"]
+                                
+                            };
+                            dispositivo.Add(dispositivoAux);
+
+                            var ambienteAux = new AmbienteModel
+                            {
+                                Nome = reader["nomeambiente"].ToString()
+                            };
+                            ambiente.Add(ambienteAux);
+
+                            var tipoDispositivoAux = new TipoDispositivoModel
+                            {
+                                Nome = reader["tipoDispositivos"].ToString()
+                            };
+                            tipoDispositivo.Add(tipoDispositivoAux);
+
+
+                        }
                     }
                 }
             }
-            return dispositivo;
+            return Tuple.Create(cliente, dispositivo,ambiente, tipoDispositivo);
         }
 
         public void Update(DispositivoModel dispositivo)

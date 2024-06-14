@@ -5,11 +5,12 @@
     ViewData["Title"] = "SmartBoard do Admin";
 }
 <style>
-    .dt-container{
+    .dt-container {
         mmin-width: 400px;
         max-width: 100%;
         width: 100%;
     }
+
     .content-table {
         border-collapse: collapse;
         margin: 25px 0;
@@ -45,27 +46,13 @@
             .content-table tbody tr:last-of-type {
                 border-bottom: 2px solid #808080;
             }
-
 </style>
-
-@if (TempData["MensagemSucesso"] != null)
-{
-    <div class="alert alert-success text-center" role="alert">
-        @TempData["MensagemSucesso"]
-    </div>
-}
-@if (TempData["MensagemErro"] != null)
-{
-    <div class="alert alert-danger text-rose-600 text-center" role="alert">
-        @TempData["MensagemErro"]
-    </div>
-}
 
 <div class="bg-white rounded-xl shadow-lg py-7 px-7 mt-5 justify-center">
     <div class="flex flex-wrap justify-center align-middle w-full">
         <span class="text-xl text-gray-800 w-4/5 align-middle text-center font-bold justify-center">Bem Vindo, Segue a lista de clientes disponíveis.</span>
         <div class="flex flex-wrap justify-center align-middle w-4/5 mt-12">
-            <table id="myTable" class="content-table w-full">
+            <table id="myTable" class="content-table">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -83,15 +70,14 @@
                             PessoaModel pessoa = new PessoaModel();
                             pessoa = Model.Item2.Find(x => x.IdPessoa == cliente.IdPessoa);
                             TelefoneModel telefone = new TelefoneModel();
-                            telefone = Model.Item3.Find(x => x.IdPessoa == pessoa.IdPessoa);
+                            telefone = Model.Item3.Find(y => y.IdPessoa == pessoa.IdPessoa);
                             <tr class ="text-gray-700 hover:text-orange-400">
                                 <td>@pessoa.Nome</td>
                                 <td>@pessoa.Cpf</td>
                                 <td>@telefone.Numero</td>
                                 <td>@pessoa.Ativo</td>
                                 <td>
-                                    <a role="button" class="btn btn-primary" asp-controller="DeviceAdmin" asp-action="EditarCliente" asp-route-id="@cliente.IdCliente">Editar</a>
-                                    <a role="button" class="btn btn-danger" asp-controller="DeviceAdmin" asp-action="ApagarClienteConfirmacao" asp-route-id="@cliente.IdCliente">Apagar</a>
+                                    <a role="button" class="btn btn-primary" asp-controller="DeviceTecnico" asp-action="ListarDispositivoClientes" asp-route-id="@cliente.IdCliente">Editar</a>
                                 </td>
                             </tr>
                         }

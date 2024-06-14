@@ -14,40 +14,33 @@ namespace SmartBoard.Repositories
             using (SqlCommand cmd = new SqlCommand("INSERT INTO Ambiente (nome, id_cliente) VALUES (@Nome, @IdCliente)", connection))
             {
                 cmd.Parameters.AddWithValue("@Nome", ambiente.Nome);
-                cmd.Parameters.AddWithValue("@IdCliente", ambiente.IdCliente);
                 cmd.ExecuteNonQuery();
             }
         }
 
-        public void Delete(int id)
+        public IEnumerable<AmbienteModel> GetAllAmbientes()
         {
-            using (SqlCommand cmd = new SqlCommand("DELETE FROM Ambiente WHERE id_ambiente = @id", connection))
-            {
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.ExecuteNonQuery();
-            }
-        }
+            List<AmbienteModel> ambiente = new List<AmbienteModel>();
 
-        public IEnumerable<AmbienteModel> Read()
-        {
-            List<AmbienteModel> ambientes = new List<AmbienteModel>();
-            using (SqlCommand cmd = new SqlCommand("SELECT * FROM Ambiente", connection))
+            using (SqlCommand cmd = new SqlCommand("SELECT id_ambiente, nomeambiente FROM Ambientes", connection))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        AmbienteModel ambiente = new AmbienteModel
+                        while (reader.Read())
                         {
-                            IdAmbiente = reader.GetInt32(0),
-                            Nome = reader.GetString(1),
-                            IdCliente = reader.GetInt32(2)
-                        };
-                        ambientes.Add(ambiente);
+                            var ambienteAux = new AmbienteModel
+                            {
+                                IdAmbiente = (int)reader["id_ambiente"],
+                                Nome = reader["nomeambiente"].ToString(),
+                            };
+                            ambiente.Add(ambienteAux);
+                        }
                     }
                 }
             }
-            return ambientes;
+            return ambiente;
         }
 
         public AmbienteModel Read(int id)
@@ -64,23 +57,11 @@ namespace SmartBoard.Repositories
                         {
                             IdAmbiente = reader.GetInt32(0),
                             Nome = reader.GetString(1),
-                            IdCliente = reader.GetInt32(2)
                         };
                     }
                 }
             }
             return ambiente;
-        }
-
-        public void Update(AmbienteModel ambiente)
-        {
-            using (SqlCommand cmd = new SqlCommand("UPDATE Ambiente SET nome = @Nome, id_cliente = @IdCliente WHERE id_ambiente = @Id", connection))
-            {
-                cmd.Parameters.AddWithValue("@Nome", ambiente.Nome);
-                cmd.Parameters.AddWithValue("@IdCliente", ambiente.IdCliente);
-                cmd.Parameters.AddWithValue("@Id", ambiente.IdAmbiente);
-                cmd.ExecuteNonQuery();
-            }
         }
     }
 }

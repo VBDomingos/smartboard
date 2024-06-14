@@ -24,7 +24,57 @@ public class DeviceAdminController : Controller
         return View(clienteDados);
     }
 
-    public IActionResult Privacy()
+    public IActionResult EditarCliente(int id)
+    {
+        try
+        {
+            Tuple<ClienteModel, PessoaUpdateModel, TelefoneModel> clienteDados = _clienteRepository.GetClientById(id);
+
+            PessoaClienteUpdateViewModel pessoaCliente = new PessoaClienteUpdateViewModel();
+
+            pessoaCliente.Pessoa = clienteDados.Item2;
+            pessoaCliente.Cliente = clienteDados.Item1;
+            pessoaCliente.Telefone = clienteDados.Item3;
+
+            return View(pessoaCliente);
+        }
+        catch (Exception erro)
+        { 
+            TempData["MensagemErro"] = $"Erro ao Buscar cliente, tente novamente, detalhe: {erro.Message}";
+            return RedirectToAction("HomeAdmin");
+        }
+    }
+    [HttpPost]
+    public IActionResult EditarCliente(PessoaClienteUpdateViewModel pessoaClienteModel)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                // fazendo consulta pelo email e senha
+                try
+                {
+                    _clienteRepository.UpdatePessoaByCliente(pessoaClienteModel);
+                    TempData["MensagemSucesso"] = $"O Cliente Foi Alterado Com Sucesso";
+                    return RedirectToAction("HomeAdmin");
+                }
+                catch (Exception erro)
+                {
+                    TempData["MensagemErro"] = $"Erro ao tentar fazer fazer o insert, detalhe: {erro.Message}";
+                    return RedirectToAction("EditarCliente", pessoaClienteModel);
+                }
+
+            }
+            return View("EditarCliente", pessoaClienteModel);
+        }
+        catch (Exception erro)
+        {
+            TempData["MensagemErro"] = $"Erro ao tentar fazer cadastro de cliente, detalhe: {erro.Message}";
+            return RedirectToAction("EditarCliente", pessoaClienteModel);
+        }
+    }
+
+            public IActionResult Privacy()
     {
         return View();
     }

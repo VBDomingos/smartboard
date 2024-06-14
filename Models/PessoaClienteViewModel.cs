@@ -13,4 +13,18 @@ namespace SmartBoard.Models
             Telefone = new TelefoneModel();
         }
     }
+
+    public class PessoaClienteUpdateViewModel
+    {
+        public PessoaUpdateModel Pessoa { get; set; }
+        public TelefoneModel Telefone { get; set; }
+        public ClienteModel Cliente { get; set; }
+
+        public PessoaClienteUpdateViewModel()
+        {
+            Pessoa = new PessoaUpdateModel();
+            Cliente = new ClienteModel();
+            Telefone = new TelefoneModel();
+        }
+    }
 }

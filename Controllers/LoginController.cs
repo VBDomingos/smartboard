@@ -24,8 +24,26 @@ public class LoginController : Controller
 
 
     public IActionResult Index()
-    {
+   {
+
+        
+        switch (HttpContext.Session.GetString("TipoPessoa"))
+        {
+            case "A":
+                return RedirectToAction("HomeAdmin", "DeviceAdmin", null);
+                
+            case "T":
+                return RedirectToAction("HomeTecnico", "DeviceTecnico", null);
+                
+            case "C":
+                return RedirectToAction("HomeClient", "DeviceClient", null);
+                
+            default:
+                    break;
+                
+        }
         return View();
+
     }
 
     public IActionResult Privacy()
@@ -50,7 +68,7 @@ public class LoginController : Controller
                 PessoaModel pessoa = _pessoaRepository.Login(loginModel.Login, loginModel.Senha);
                 if (pessoa != null)
                 {
-                    if (pessoa.Ativo == 1)
+                    if (pessoa.Ativo == true)
                     {
                         // Criação da sessão
                         HttpContext.Session.SetString("id_pessoa", pessoa.IdPessoa.ToString());
