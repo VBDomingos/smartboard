@@ -31,56 +31,57 @@
 
         <div data-modal-toggle="textModal" class="bg-gray-200 p-4 rounded-xl flex flex-col items-center h-48 m-3 w-1/3 md:w-1/3 lg:w-1/5 justify-center items-center shadow-xl hover:shadow-orange-200 hover:cursor-pointer hover:scale-110 hover:bg-gray-300">
             <span class="text-2xl">🔡</span>
+            <span class="mt-2 text-center font-medium">TEXTO - LETREIRO</span>
         </div>
             <div data-modal-toggle="alarmModal" class="bg-gray-200 p-4 rounded-xl flex flex-col items-center h-48 m-3 w-1/3 md:w-1/3 lg:w-1/5 justify-center items-center shadow-xl hover:shadow-orange-200 hover:cursor-pointer hover:scale-110 hover:bg-gray-300">
-            <span class="text-2xl">⏰</span>
+            <span class="text-2xl">⏰ALARME - DESPERTADOR</span>
         </div>
     </div> 
 </div>
 <!-- Modal -->
 <div id="myModal" class="fixed inset-0 hidden items-center justify-center bg-gray-800 bg-opacity-50" data-modal-target="myModal">
     <div class="bg-white p-4 rounded-lg max-w-lg mx-auto">
-        <h2 class="text-xl font-bold mb-4">LIGA ALGO</h2>
-        <p class="mb-4">VAI ME LIGA VAI!!!!</p>
+        <h2 class="text-xl font-bold mb-4">Ligar algo</h2>
+        <p class="mb-4">Opções</p>
 
         <form asp-controller="Arduino" asp-action="TurnOnLed" method="post">
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">LIGA ESSA MERDA</button>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Ligar</button>
         </form>
 
         <form asp-controller="Arduino" asp-action="TurnOffLed" method="post">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Close</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Desligar</button>
         </form>
     </div>
 </div>
 
 <div id="textModal" class="fixed inset-0 hidden items-center justify-center bg-gray-800 bg-opacity-50" data-modal-target="textModal">
     <div class="bg-white p-4 rounded-lg max-w-lg mx-auto">
-        <h2 class="text-xl font-bold mb-4">LIGA ALGO</h2>
-        <p class="mb-4">VAI ME LIGA VAI!!!!</p>
+        <h2 class="text-xl font-bold mb-4">Interagir</h2>
+        <p class="mb-4">Digite sua mensagem</p>
         <form asp-controller="Arduino" asp-action="SendText" method="post">
              <div class="mb-4">
                 <label for="inputText" class="block text-gray-700">Texto</label>
                 <input type="text" id="inputText" name="inputText" class="border border-gray-300 p-2 rounded w-full" required>
             </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Enviar</button>
         </form>
     </div>
 </div>
 
 <div id="alarmModal" class="fixed inset-0 hidden items-center justify-center bg-gray-800 bg-opacity-50" data-modal-target="alarmModal">
     <div class="bg-white p-4 rounded-lg max-w-lg mx-auto">
-        <h2 class="text-xl font-bold mb-4">Set Alarm</h2>
-        <p class="mb-4">Choose the duration for the alarm:</p>
+        <h2 class="text-xl font-bold mb-4">Alarme</h2>
+        <p class="mb-4">Daqui quanto tempo irá tocar:</p>
         <form asp-controller="Arduino" asp-action="SetAlarm" method="post">
             <div class="mb-4">
-                <label for="alarmSeconds" class="block text-gray-700">Select seconds:</label>
+                <label for="alarmSeconds" class="block text-gray-700">Quantidade de segundos</label>
                 <select id="alarmSeconds" name="alarmSeconds" class="border border-gray-300 p-2 rounded w-full" required>
                     <option value="3">1</option>
                     <option value="4">2</option>
                     <option value="5">3</option>
                 </select>
             </div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Enviar</button>
         </form>
     </div>
 </div>
