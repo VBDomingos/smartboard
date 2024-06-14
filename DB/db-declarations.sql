@@ -101,13 +101,13 @@ CREATE TABLE AmbienteGrupos (
     FOREIGN KEY (id_ambiente) REFERENCES Ambientes(id_ambiente)
 );
 
--- View ClienteDispositivosView
+  -- View ClienteDispositivosView
 CREATE VIEW ClienteDispositivosView AS
 SELECT 
     c.id_cliente,
     p.nome AS cliente_nome,
-    g.nome AS ambiente_nome,
-    d.nome AS dispositivo_nome
+    g.nomegrupoambiente AS ambiente_nome,
+    d.nomedispositivo AS dispositivo_nome
 FROM 
     Clientes c
 JOIN 
