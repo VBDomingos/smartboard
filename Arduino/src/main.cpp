@@ -31,18 +31,21 @@ void loop() {
       lcd.print(str);
     }
     if (command == '3') {
+      delay(1000);
       digitalWrite(buzzer, HIGH);
       delay(1000);
       digitalWrite(buzzer, LOW);
     }
     if (command == '4') {
-      digitalWrite(buzzer, HIGH);
       delay(2000);
+      digitalWrite(buzzer, HIGH);
+      delay(1000);
       digitalWrite(buzzer, LOW);
     }
     if (command == '5') {
-      digitalWrite(buzzer, HIGH);
       delay(3000);
+      digitalWrite(buzzer, HIGH);
+      delay(1000);
       digitalWrite(buzzer, LOW);
     }
   }

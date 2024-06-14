@@ -50,8 +50,8 @@ public class ArduinoController : Controller
     [HttpPost]
     public IActionResult SendText(string inputText)
     {
-        SendCommand('2');
-        SendString(inputText);
+        string command = '2' + inputText;
+        SendString(command);
         return RedirectToAction("HomeClient", "DeviceClient");
     }
 
@@ -70,11 +70,12 @@ public class ArduinoController : Controller
         }
     }
 
-    private void SendString(string text)
+    private void SendString(string command)
     {
         if (_serialPort.IsOpen)
         {
-            _serialPort.Write(text);
+             _serialPort.Write(command.ToString());
+
         }
     }
 }
