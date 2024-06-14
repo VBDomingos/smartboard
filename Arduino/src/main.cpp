@@ -5,7 +5,7 @@ LCD_I2C lcd(0x27, 16, 2);
 
 char buzzer = 4;
 
-int led; // 9
+int led; // 8
 
 void setup() {
   pinMode(buzzer, OUTPUT);

@@ -1,4 +1,4 @@
--- Create database SmartBoard
+Create database SmartBoard
 
 use SmartBoard
 
@@ -51,12 +51,6 @@ CREATE TABLE Ambientes (
     nomeambiente VARCHAR(100) NOT NULL
 );
 
--- Tabela Tipo dispositivo
-CREATE Table TipoDispositivos(
-    id_tipodispositivo INT identity PRIMARY KEY,
-    nometipodispositivo VARCHAR(100) NOT NULL,
-)
-
 -- Tabela Dispositivo
 CREATE TABLE Dispositivos (
     id_dispositivo INT identity PRIMARY KEY,
@@ -70,6 +64,12 @@ CREATE TABLE Dispositivos (
     FOREIGN KEY (id_ambiente) REFERENCES Ambientes(id_ambiente),
     FOREIGN KEY (id_tecnico) REFERENCES Tecnicos(id_tecnico),
     FOREIGN KEY (id_tipodispositivo) REFERENCES TipoDispositivos(id_tipodispositivo)
+);
+
+-- Tabela Tipo dispositivo
+CREATE Table TipoDispositivos(
+    id_tipodispositivo INT identity PRIMARY KEY,
+    nometipodispositivo VARCHAR(100) NOT NULL,
 );
 
 -- Tabela Relatorio
@@ -121,23 +121,6 @@ JOIN
 JOIN 
     Dispositivos d ON d.id_ambiente = a.id_ambiente
 
-
-
-
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Closet');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Copa');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Corredor');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Cozinha');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Despensa');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Escritório');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Genkan');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Quarto');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Sala de Estar');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Sala de Jantar');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Sala de Reuniões');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Terraço');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Varanda');
-INSERT INTO [SmartBoard].[dbo].[Ambientes] VALUES ('Vestíbulo');
 
 
 
