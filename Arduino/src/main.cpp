@@ -3,9 +3,13 @@
 
 LCD_I2C lcd(0x27, 16, 2); 
 
+int buzzer = 4;
+
+int led = 10;
+
 void setup() {
   pinMode(4, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(led, OUTPUT);
   Serial.begin(9600);
 
   lcd.begin();
@@ -16,20 +20,30 @@ void loop() {
   if (Serial.available()) {
     delay(50);
     char command = Serial.read();
-    if (command == '1') {
-      digitalWrite(10, HIGH);
-    }
     if (command == '0') {
-      digitalWrite(10, LOW);
+      digitalWrite(led, LOW);
+    }
+    if (command == '1') {
+      digitalWrite(led, HIGH);
     }
     if (command == '2') {
       String str = Serial.readString();
       lcd.print(str);
     }
     if (command == '3') {
-      digitalWrite(4, HIGH);
-      delay(1500);
-      digitalWrite(4, LOW);
+      digitalWrite(buzzer, HIGH);
+      delay(1000);
+      digitalWrite(buzzer, LOW);
+    }
+    if (command == '4') {
+      digitalWrite(buzzer, HIGH);
+      delay(2000);
+      digitalWrite(buzzer, LOW);
+    }
+    if (command == '5') {
+      digitalWrite(buzzer, HIGH);
+      delay(3000);
+      digitalWrite(buzzer, LOW);
     }
   }
 }

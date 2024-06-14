@@ -70,7 +70,7 @@ public class ArduinoController : Controller
         }
     }
 
-        private void SendString(string text)
+    private void SendString(string text)
     {
         if (_serialPort.IsOpen)
         {
