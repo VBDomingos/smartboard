@@ -34,16 +34,18 @@ public class ArduinoController : Controller
     }
 
     [HttpPost]
-    public IActionResult TurnOnLed()
+    public IActionResult TurnOffLed()
     {
-        SendCommand('1');
+        getporta
+        string tosend = '0' + getporta
+        SendString(tosend); // comando 0, porta 8
         return RedirectToAction("HomeClient", "DeviceClient");
     }
 
     [HttpPost]
-    public IActionResult TurnOffLed()
+    public IActionResult TurnOnLed()
     {
-        SendCommand('0');
+        SendString("18"); // comando 1, porta 8
         return RedirectToAction("HomeClient", "DeviceClient");
     }
 
